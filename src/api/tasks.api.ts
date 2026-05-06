@@ -3,16 +3,24 @@ import type { Task } from "../types";
 
 export const getTasks = async (): Promise<Task[]> => {
     const response = await axiosInstance.get("/tasks/");
-    return response.data;
+    return response.data.data;
 };
 
 export const createTask = async (
     task: Partial<Task>
 ): Promise<Task> => {
     const response = await axiosInstance.post("/tasks/", task);
+    return response.data.data;
+};
+
+export const updateTask = async (
+    id: number,
+    data: Partial<Task>
+): Promise<Task> => {
+    const response = await axiosInstance.patch(`/tasks/${id}/`, data);
     return response.data;
 };
 
-export const deleteTask = async (id: string): Promise<void> => {
+export const deleteTask = async (id: number): Promise<void> => {
     await axiosInstance.delete(`/tasks/${id}/`);
 };
